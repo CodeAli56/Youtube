@@ -309,7 +309,7 @@ const getUserChannelProfile = asyncHandler( async(req, res) => {
 })
 
 
-const watchHistory = asyncHandler( async(req, res) => {
+const getWatchHistory = asyncHandler( async(req, res) => {
     const user =  User.aggregate([
         {
             $match: { _id : new mongoose.Types.ObjectId(req.user._id) }
@@ -354,4 +354,4 @@ const watchHistory = asyncHandler( async(req, res) => {
     .json(new ApiResponse(200, user[0].watchHistory, "watch history fetched successfully"))
 })
 
-export {registerUser, loginUser, logoutUser, refreshAccessToken, changeCurrentPassword, getUser, updateAccountDetails,updateUserAvatar, updateCoverImage, getUserChannelProfile,watchHistory }
+export {registerUser, loginUser, logoutUser, refreshAccessToken, changeCurrentPassword, getUser, updateAccountDetails,updateUserAvatar, updateCoverImage, getUserChannelProfile, getWatchHistory }
