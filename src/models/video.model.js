@@ -8,7 +8,15 @@ const videoSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    videoFileId: {
+        type: String,
+        required: true,
+    },
     thumbnail: {
+        type: String,
+        required: true,
+    },
+    thumbnailId: {
         type: String,
         required: true,
     },
