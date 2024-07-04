@@ -75,9 +75,16 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
 })
 
 const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
-
     const {playlistId, videoId} = req.params
+    const removedVideo = Playlist.findById(playlistId)
+    const newPlaylist = removedVideo.videos.filter((video)=> {
+        return video !== videoId
+    })
+    removedVideo.videos = newPlaylist
+    removedVideo.save();
 
+    return res.status(200)
+    .json(new ApiResponse(200, {}, "Successfully removed video from playlist."))
 })
 
 const deletePlaylist = asyncHandler(async (req, res) => {

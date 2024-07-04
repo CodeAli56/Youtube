@@ -10,6 +10,35 @@ import {uploadOnCloudinary, deleteFromCloudinary} from "../utils/cloudinary.js"
 const getAllVideos = asyncHandler(async (req, res) => {
     const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query
     //TODO: get all videos based on query, sort, pagination
+    const videos = await Video.aggregate([
+        {
+            $match: {
+                "owner": new mongoose.Types.ObjectId(userId)
+            }
+        },
+        {
+            $sort: {
+                "updatedAt": -1
+            }
+        },
+        {
+            $project: {
+                videoFile: 1,
+                thumbnail: 1,
+                title: 1,
+                description: 1,
+                duration: 1,
+                views: 1,
+                owner: 1
+            }
+        },
+        {
+            $limit: page * limit
+        }
+    ])
+    
+    console.log(videos);
+
 })
 
 const publishAVideo = asyncHandler(async (req, res) => {
